@@ -148,6 +148,9 @@
             </div>
             <div class="comment-content">
                 <div class="comment-output" id="comment-output-0"><h1>Architecture Overview</h1>
+<p>This page describes the Amazon FC weight model server, by tracing a function call to the server.</p>
+<p>The entry point to the server is: <code>machine_learning/inference/amazon_fc_weight_estimation/server.py</code>
+<p>The server will be used to serve production inference for Amazon FC, including weights for cardboard boxes (in grams)</p>
 <p>This server runs two YOLO models, one being Giordano's Amazon FC object detection model, and the other being a segmentation model for cardboard boxes.</p>
 <p>This server will return <em>all</em> detections, from Giordano's model, with a weight estimate added for Cardboard boxes.</p>
 <p>This contract is identical to Prateek's server.</p>
