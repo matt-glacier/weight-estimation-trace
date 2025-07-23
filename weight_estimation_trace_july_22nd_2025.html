@@ -5861,7 +5861,7 @@ s3://scanner-data.us-west-2/SCN-011/2025/07/01/15/36/32-102661_0.jpg,0.43,0.16,0
                     const img = clonedDoc.querySelector(`#trace-img-${imageId}`);
                     
                     if (img && imageState.expanded !== undefined) {
-                        img.dataset.expanded = imageState.expanded;
+                        img.dataset.expanded = imageState.expanded ? 'true' : 'false';
                     }
                 } else {
                     const nodeState = state[id];
@@ -5901,14 +5901,29 @@ s3://scanner-data.us-west-2/SCN-011/2025/07/01/15/36/32-102661_0.jpg,0.43,0.16,0
                     }
                 } else {
                     const nodeState = state[id];
-                    
-                    if (nodeState.expanded) {
-                        window.toggleCall(id);
+
+                    if (nodeState.expanded !== undefined) {
+                        const content = document.getElementById(`content-${id}`);
+                        const icon = document.getElementById(`icon-${id}`);
+                        if (content && icon) {
+                            if (nodeState.expanded) {
+                                content.classList.add('show');
+                                icon.textContent = '▼';
+                                content.dataset.expanded = 'true';
+                            } else {
+                                content.classList.remove('show');
+                                icon.textContent = '▶';
+                                content.dataset.expanded = 'false';
+                            }
+                        }
                     }
 
-                    if (nodeState.sourceVisible) {
+                    if (nodeState.sourceVisible !== undefined) {
                         const container = document.getElementById(`source-${id}`);
-                        if (container) container.style.display = 'block';
+                        if (container) {
+                            container.style.display = nodeState.sourceVisible ? 'block' : 'none';
+                            container.dataset.sourceVisible = nodeState.sourceVisible ? 'true' : 'false';
+                        }
                     }
 
                     if (nodeState.comment !== undefined) {
